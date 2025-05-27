@@ -1,4 +1,3 @@
-/* CSS Variables */
 :root {
   --primary-color: #003087;
   --accent-color: #00C4B4;
@@ -10,7 +9,7 @@
   --white: #fff;
 }
 
-/* Basic Reset */
+/* Reset & Base */
 * {
   margin: 0;
   padding: 0;
@@ -86,7 +85,45 @@ body {
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-/* Footer Section */
+/* Feature Section */
+.feature-section {
+  padding: 2rem 1rem;
+  background-color: var(--white);
+  max-width: 1000px;
+  margin: 2rem auto;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.feature-section h2 {
+  font-size: clamp(1.6rem, 5vw, 2rem);
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+.feature-section p {
+  color: var(--text-light);
+  font-size: clamp(0.95rem, 2.5vw, 1.05rem);
+  margin-bottom: 1.5rem;
+}
+
+.feature-button {
+  background-color: var(--accent-color);
+  color: var(--white);
+  padding: 0.7rem 1.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: clamp(0.95rem, 2.5vw, 1rem);
+  transition: background-color 0.3s ease;
+}
+
+.feature-button:hover {
+  background-color: var(--hover-accent);
+}
+
+/* Footer */
 .footer-section {
   background: var(--white);
   color: var(--text-dark);
@@ -149,7 +186,7 @@ body {
   color: var(--text-light);
 }
 
-/* Responsive Design */
+/* Responsive */
 @media (max-width: 768px) {
   .navbar {
     flex-direction: column;
@@ -164,12 +201,14 @@ body {
     margin-top: 0.8rem;
   }
 
-  .live-class-section {
+  .live-class-section,
+  .feature-section {
     padding: 1.5rem 0.8rem;
     margin: 1.5rem auto;
   }
 
-  .live-class-section h2 {
+  .live-class-section h2,
+  .feature-section h2 {
     font-size: clamp(1.5rem, 4vw, 1.8rem);
   }
 
@@ -179,11 +218,9 @@ body {
 }
 
 @media (max-width: 480px) {
-  .live-class-section h2 {
-    font-size: clamp(1.2rem, 3.5vw, 1.5rem);
-  }
-
-  .navbar-brand {
+  .navbar-brand,
+  .live-class-section h2,
+  .feature-section h2 {
     font-size: clamp(1.2rem, 3.5vw, 1.5rem);
   }
 }

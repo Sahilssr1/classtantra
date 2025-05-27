@@ -5,9 +5,10 @@
   <title>Dashboard - Classtantra</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="dashboard.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-   <!-- Navbar -->
+  <!-- Navbar -->
   <nav class="navbar">
     <div class="navbar-brand">CLASSTANTRA</div>
     <div class="navbar-links">
@@ -15,7 +16,7 @@
     </div>
   </nav>
 
-  <!-- Live Class Section with Jitsi Embed -->
+  <!-- Live Class Section -->
   <section class="live-class-section">
     <h2>Join Our Live Class</h2>
     <div id="meet"></div>
@@ -24,8 +25,21 @@
     </p>
   </section>
 
+  <!-- Sell Your Course Section -->
+  <section class="feature-section">
+    <h2>Sell Your Course</h2>
+    <p>Share your expertise with the world. Upload and manage your courses easily.</p>
+    <a href="sell-course.html" class="feature-button">Start Selling</a>
+  </section>
 
- <!-- Footer Section -->
+  <!-- Online Test Section -->
+  <section class="feature-section">
+    <h2>Take Online Test</h2>
+    <p>Challenge yourself with our curated practice tests and evaluate your preparation.</p>
+    <a href="online-test.html" class="feature-button">Start Test</a>
+  </section>
+
+  <!-- Footer Section -->
   <footer class="footer-section">
     <div class="footer-container">
       <div class="footer-logo">
@@ -48,17 +62,17 @@
       <p>© 2025 ALL RIGHTS RESERVED</p>
     </div>
   </footer>
-   <!-- Jitsi Meet API -->
+
+  <!-- Jitsi Meet API -->
   <script src="https://meet.jit.si/external_api.js"></script>
   <script>
     const domain = 'meet.jit.si';
     const options = {
-      roomName: 'ClasstantraLiveClassRoom123',  // You can make this dynamic if you want
+      roomName: 'ClasstantraLiveClassRoom123',
       width: '100%',
       height: 600,
       parentNode: document.querySelector('#meet'),
       interfaceConfigOverwrite: {
-        // Customize interface if needed
         SHOW_JITSI_WATERMARK: false,
         SHOW_WATERMARK_FOR_GUESTS: false,
         SHOW_BRAND_WATERMARK: false,
