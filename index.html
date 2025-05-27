@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Classtantra - Google Login</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-brand">CLASSTANTRA</div>
+    <div class="navbar-links" id="navbar-links">
+      <div id="g_id_onload"
+           data-client_id="908992369653-b211595560pqp6ifhje1273fjv6m8hge.apps.googleusercontent.com"
+           data-context="signin"
+           data-ux_mode="popup"
+           data-callback="handleCredentialResponse"
+           data-auto_prompt="false">
+      </div>
+      <div class="g_id_signin"
+           data-type="standard"
+           data-shape="pill"
+           data-theme="outline"
+           data-text="signin"   
+           data-size="medium">
+      </div>
+    </div>
+  </nav>
+
+  <!-- Split Login Page -->
+  <div class="login-container">
+    <div class="login-left">
+      <canvas id="ribbon-canvas"></canvas>
+      <div class="login-text">
+        <h1 class="glitched">CLASSTANTRA</h1>
+        <h2>India’s Trusted & Affordable Platform for Teachers</h2>
+      </div>
+    </div>
+    <div class="login-right">
+      <div class="login-box">
+        <h2>Request a Free Demo via WhatsApp</h2>
+        <a href="https://wa.me/9608751707?text=Hi%20I%20want%20a%20free%20demo%20of%20Classtantra"
+           target="_blank"
+           class="whatsapp-btn">
+          <img src="https://cdn-icons-png.flaticon.com/512/124/124034.png" alt="WhatsApp" />
+          Get Free Demo
+        </a>
+        <p class="terms">By signing up, you agree to our <a href="#">T&C</a> and <a href="#">Privacy Policy</a></p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Feature Section -->
+  <section class="feature-section">
+    <h2>Simplify Your Teaching<br>with Our Best Features</h2>
+    <div class="feature-grid">
+      <div class="feature-item">
+        <img src="app.png" alt="App Icon">
+        <p>Own Branded App</p>
+      </div>
+      <div class="feature-item">
+        <img src="www.png" alt="Website Icon">
+        <p>Own Branded Website</p>
+      </div>
+      <div class="feature-item">
+        <img src="sell.png" alt="Courses Icon">
+        <p>Sell Your Courses</p>
+      </div>
+      <div class="feature-item">
+        <img src="live.png" alt="Live Class Icon">
+        <p>Take Live Classes</p>
+      </div>
+      <div class="feature-item">
+        <img src="rightbox.png" alt="Online Test Icon">
+        <p>Create Online Tests</p>
+      </div>
+      <div class="feature-item">
+        <img src="secure.png" alt="Security Icon">
+        <p>100% Content Security</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Section -->
+  <section class="pricing-section">
+    <h2>Best Pricing Designed for You</h2>
+    <div class="pricing-container">
+      <div class="pricing-card">
+        <h3>Classtantra Plan - 1 Year</h3>
+        <div class="price">
+          <span class="original">₹21,999/-</span> ₹19,999/-
+        </div>
+        <p>Recommended for educators & content creators</p>
+        <ul>
+          <li>Android App</li>
+          <li>Website</li>
+          <li>Admin Portal</li>
+          <li>Unlimited Recorded Courses</li>
+          <li>Unlimited LIVE Classes</li>
+          <li>Unlimited Student Enrollments</li>
+          <li>Unlimited Storage</li>
+          <li>A.I. Powered Leads</li>
+          <li>And Much More</li>
+        </ul>
+        <a href="#" class="pay-button">Pay Now</a>
+      </div>
+      <div class="pricing-card">
+        <h3>Classtantra Plan - 2 Years</h3>
+        <div class="price">
+          <span class="original">₹25,999/-</span> ₹22,999/-
+        </div>
+        <p>Recommended for medium & large coaching centres</p>
+        <ul>
+          <li>Android App</li>
+          <li>Website</li>
+          <li>Admin Portal</li>
+          <li>Unlimited Recorded Courses</li>
+          <li>Unlimited LIVE Classes</li>
+          <li>Unlimited Student Enrollments</li>
+          <li>Unlimited Storage</li>
+          <li>A.I. Powered Leads</li>
+          <li>And Much More</li>
+        </ul>
+        <a href="#" class="pay-button">Pay Now</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action Section -->
+  <section class="cta-section">
+    <div class="cta-container">
+      <div class="cta-image">
+        <img src="start.png" alt="Hand holding coin with upward arrow">
+      </div>
+      <div class="cta-content">
+        <h2>Are You Ready to Start<br>Your Growth Journey?</h2>
+        <a href="#" class="start-button">Start Now <span class="arrow">➔</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer Section -->
+  <footer class="footer-section">
+    <div class="footer-container">
+      <div class="footer-logo">
+        <img src="logo.png" alt="Classtantra">
+      </div>
+      <div class="footer-links">
+        <a href="#">About Us</a>
+        <a href="#">Contact Us</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms & Conditions</a>
+      </div>
+      <div class="footer-social">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 ALL RIGHTS RESERVED</p>
+    </div>
+  </footer>
+  
+  <script>
+  const user = localStorage.getItem('user');
+  if (!user) {
+    window.location.href = 'index.html'; // Redirect back to login if not signed in
+  }
+</script>
+
+  <script src="script.js"></script>
+</body>
+</html>
