@@ -1,41 +1,47 @@
 // Google Login Handling
 function handleCredentialResponse(response) {
-  const data = jwt_decode(response.credential);
-  console.log("Google User:", data);
+  try {
+    const data = jwt_decode(response.credential);
+    console.log("Google User:", data);
 
-  document.getElementById("navbar-links").innerHTML = `
-    <div class="user-info" style="display:flex;align-items:center;gap:10px;">
-      <img src="${data.picture}" alt="User" style="width:32px;height:32px;border-radius:50%;" />
-      <span>Hi, ${data.given_name}</span>
-      <a href="#" onclick="logout()">Logout</a>
-    </div>
-  `;
+    // Store user info in localStorage
+    localStorage.setItem('user', JSON.stringify(data));
+
+    // Update navbar with user info
+    document.getElementById("navbar-links").innerHTML = `
+      <div class="user-info" style="display:flex;align-items:center;gap:10px;">
+        <img src="${data.picture}" alt="User" style="width:28px;height:28px;border-radius:50%;" />
+        <span>Hi, ${data.given_name}</span>
+        <a href="#" onclick="logout()">Logout</a>
+      </div>
+    `;
+
+    // Redirect to dashboard
+    window.location.href = "dashboard.html";
+  } catch (error) {
+    console.error("Error handling Google credential:", error);
+    alert("Failed to sign in. Please try again.");
+  }
 }
-
-
-
-//REDIRECT NEW PAGE
-function handleCredentialResponse(response) {
-  const credential = response.credential;
-  const decoded = jwt_decode(credential); // Decode JWT to get user details if needed
-  console.log("User details:", decoded);
-
-  // You can optionally store user info in localStorage/sessionStorage
-  localStorage.setItem('user', JSON.stringify(decoded));
-
-  // ✅ Redirect to the next page
-  window.location.href = "dashboard.html"; // Change to your desired next page
-}
-
 
 function logout() {
-  google.accounts.id.disableAutoSelect();
-  location.reload();
+  try {
+    google.accounts.id.disableAutoSelect();
+    localStorage.removeItem('user');
+    window.location.href = "index.html";
+  } catch (error) {
+    console.error("Error during logout:", error);
+    window.location.href = "index.html";
+  }
 }
 
-
-
-
+// Redirect to login if not signed in
+document.addEventListener('DOMContentLoaded', () => {
+  const user = localStorage.getItem('user');
+  if (!user && window.location.pathname.includes('dashboard.html')) {
+    window.location.href = 'index.html';
+  }
+});
 
 // Canvas Animation
 // ----- Utils ----- //
@@ -52,10 +58,6 @@ function modulo(num, div) {
 
 function normalizeAngle(angle) {
   return modulo(angle, Math.PI * 2);
-}
-
-function getDegrees(angle) {
-  return angle * (180 / Math.PI);
 }
 
 function line(ctx, a, b) {
@@ -140,10 +142,6 @@ Vector.copy = function(v) {
   return new Vector(v.x, v.y);
 };
 
-Vector.isSame = function(a, b) {
-  return a.x == b.x && a.y == b.y;
-};
-
 Vector.getDistance = function(a, b) {
   var dx = a.x - b.x;
   var dy = a.y - b.y;
@@ -210,18 +208,6 @@ StickConstraint.prototype.render = function(ctx) {
   line(ctx, this.particleA.position, this.particleB.position);
 };
 
-// ----- PinConstraint ----- //
-function PinConstraint(particle, position) {
-  this.particle = particle;
-  this.position = position;
-}
-
-PinConstraint.prototype.update = function() {
-  this.particle.position = Vector.copy(this.position);
-};
-
-PinConstraint.prototype.render = function() {};
-
 // ----- ChainLinkConstraint ----- //
 function ChainLinkConstraint(particleA, particleB, distance, shiftEase) {
   this.particleA = particleA;
@@ -276,6 +262,18 @@ LinkConstraint.prototype.render = function(ctx) {
   ctx.lineWidth = 2;
   line(ctx, this.particleA.position, this.particleB.position);
 };
+
+// ----- PinConstraint ----- //
+function PinConstraint(particle, position) {
+  this.particle = particle;
+  this.position = position;
+}
+
+PinConstraint.prototype.update = function() {
+  this.particle.position = Vector.copy(this.position);
+};
+
+PinConstraint.prototype.render = function() {};
 
 // ----- Ribbon ----- //
 function Ribbon(props) {
@@ -351,100 +349,124 @@ Ribbon.prototype.render = function(ctx) {
 
 // ----- Canvas Setup ----- //
 var canvas = document.getElementById('ribbon-canvas');
-var ctx = canvas.getContext('2d');
+if (canvas && canvas.getContext) {
+  var ctx = canvas.getContext('2d');
 
-// Set canvas size to match its container
-function resizeCanvas() {
-  var rect = canvas.getBoundingClientRect();
-  canvas.width = rect.width;
-  canvas.height = rect.height;
-}
+  // Set canvas size to match its container
+  function resizeCanvas() {
+    var rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * window.devicePixelRatio;
+    canvas.height = rect.height * window.devicePixelRatio;
+    canvas.style.width = rect.width + 'px';
+    canvas.style.height = rect.height + 'px';
+    ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+  }
 
-// Initial resize
-resizeCanvas();
+  // Initial resize
+  resizeCanvas();
 
-// Resize canvas on window resize
-window.addEventListener('resize', resizeCanvas);
+  // Resize canvas on window resize
+  window.addEventListener('resize', resizeCanvas);
 
-var canvasOffsetLeft, canvasOffsetTop;
+  var canvasOffsetLeft, canvasOffsetTop;
 
-function updateCanvasOffset() {
-  var rect = canvas.getBoundingClientRect();
-  canvasOffsetLeft = rect.left;
-  canvasOffsetTop = rect.top;
-}
+  function updateCanvasOffset() {
+    var rect = canvas.getBoundingClientRect();
+    canvasOffsetLeft = rect.left;
+    canvasOffsetTop = rect.top;
+  }
 
-updateCanvasOffset();
-window.addEventListener('resize', updateCanvasOffset);
+  updateCanvasOffset();
+  window.addEventListener('resize', updateCanvasOffset);
 
-canvas.addEventListener('mousedown', onMousedown, false);
+  canvas.addEventListener('mousedown', onMousedown, false);
 
-var friction = 0.75;
-var gravity = new Vector(0, 0.4);
-var movementStrength = 0.9;
-var springStrength = 0.5;
+  var friction = 0.75;
+  var gravity = new Vector(0, 0.4);
+  var movementStrength = 0.9;
+  var springStrength = 0.5;
 
-var follicles = [];
-var pins = [];
+  var follicles = [];
+  var pins = [];
 
-var ribbon = new Ribbon({
-  controlPoint: new Vector(canvas.width / 2, canvas.height / 2),
-  sections: 60,
-  width: 40,
-  sectionLength: 10,
-  friction: 0.92,
-  gravity: new Vector(0, 0.2),
-  chainLinkShiftEase: 0.9
-});
+  var ribbon = new Ribbon({
+    controlPoint: new Vector(canvas.width / window.devicePixelRatio / 2, canvas.height / window.devicePixelRatio / 2),
+    sections: 30, // Reduced for mobile performance
+    width: 30,
+    sectionLength: 8,
+    friction: 0.92,
+    gravity: new Vector(0, 0.2),
+    chainLinkShiftEase: 0.9
+  });
 
-var didMouseDown = false;
-var rotateAngle = 0;
-var rotateSpeed = 0.06;
-var rotateLength;
+  var didMouseDown = false;
+  var rotateAngle = 0;
+  var rotateSpeed = 0.06;
 
-function update() {
-  ribbon.update();
-  if (!didMouseDown) {
-    rotateAngle += rotateSpeed;
-    var x = canvas.width / 2 + Math.cos(rotateAngle * 1.3) * canvas.height / 4;
-    var y = canvas.height / 2 + Math.sin(rotateAngle) * canvas.height / 4;
+  function update() {
+    ribbon.update();
+    if (!didMouseDown) {
+      rotateAngle += rotateSpeed;
+      var x = (canvas.width / window.devicePixelRatio / 2) + Math.cos(rotateAngle * 1.3) * (canvas.height / window.devicePixelRatio / 4);
+      var y = (canvas.height / window.devicePixelRatio / 2) + Math.sin(rotateAngle) * (canvas.height / window.devicePixelRatio / 4);
+      move(x, y);
+    }
+  }
+
+  function render() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ribbon.render(ctx);
+  }
+
+  function animate() {
+    update();
+    render();
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+
+  function onMousedown(event) {
+    event.preventDefault();
+    moveDragPoint(event);
+    didMouseDown = true;
+    window.addEventListener('mousemove', moveDragPoint, false);
+    window.addEventListener('mouseup', onMouseup, false);
+    canvas.addEventListener('touchstart', onTouchstart, false);
+  }
+
+  function onTouchstart(event) {
+    event.preventDefault();
+    moveDragPoint(event.touches[0]);
+    didMouseDown = true;
+    window.addEventListener('touchmove', onTouchmove, false);
+    window.addEventListener('touchend', onTouchend, false);
+  }
+
+  function onTouchmove(event) {
+    event.preventDefault();
+    moveDragPoint(event.touches[0]);
+  }
+
+  function onTouchend() {
+    window.removeEventListener('touchmove', onTouchmove, false);
+    window.removeEventListener('touchend', onTouchend, false);
+    didMouseDown = false;
+  }
+
+  function moveDragPoint(event) {
+    var x = parseInt(event.pageX - canvasOffsetLeft, 10) / window.devicePixelRatio;
+    var y = parseInt(event.pageY - canvasOffsetTop, 10) / window.devicePixelRatio;
     move(x, y);
   }
-}
 
-function render() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ribbon.render(ctx);
-}
+  function move(x, y) {
+    ribbon.controlPoint.setCoords(x, y);
+  }
 
-function animate() {
-  update();
-  render();
-  requestAnimationFrame(animate);
-}
-
-animate();
-
-function onMousedown(event) {
-  event.preventDefault();
-  moveDragPoint(event);
-  didMouseDown = true;
-  window.addEventListener('mousemove', moveDragPoint, false);
-  window.addEventListener('mouseup', onMouseup, false);
-}
-
-function moveDragPoint(event) {
-  var x = parseInt(event.pageX - canvasOffsetLeft, 10);
-  var y = parseInt(event.pageY - canvasOffsetTop, 10);
-  move(x, y);
-}
-
-function move(x, y) {
-  ribbon.controlPoint.setCoords(x, y);
-}
-
-function onMouseup() {
-  window.removeEventListener('mousemove', moveDragPoint, false);
-  window.removeEventListener('mouseup', onMouseup, false);
-  didMouseDown = false;
+  function onMouseup() {
+    window.removeEventListener('mousemove', moveDragPoint, false);
+    window.removeEventListener('mouseup', onMouseup, false);
+    didMouseDown = false;
+  }
 }

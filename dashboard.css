@@ -1,100 +1,103 @@
- /* Basic Reset */
-    * {
-      margin: 0; padding: 0; box-sizing: border-box;
-    }
-    body {
-      font-family: Arial, sans-serif;
-      background: #f9f9f9;
-      color: #333;
-      line-height: 1.6;
-    }
+/* CSS Variables */
+:root {
+  --primary-color: #003087;
+  --accent-color: #00C4B4;
+  --hover-accent: #009688;
+  --whatsapp-green: #25D366;
+  --text-dark: #333;
+  --text-light: #555;
+  --background-light: #f5f7fa;
+  --white: #fff;
+}
 
-    /* Navbar */
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background-color: white;
-      padding: 15px 30px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-    .navbar-brand {
-      font-size: 1.75rem;
-      font-weight: 700;
-      color: #222;
-      letter-spacing: 0.5px;
-    }
-    .navbar-links a {
-      color: #222;
-      text-decoration: none;
-      font-weight: 600;
-      padding: 8px 15px;
-      border: 1.5px solid transparent;
-      border-radius: 5px;
-      transition: all 0.3s ease;
-    }
-    .navbar-links a:hover {
-      background-color: #4285F4;
-      color: white;
-      border-color: #4285F4;
-    }
+/* Basic Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-    /* Live Class Section */
-    .live-class-section {
-      padding: 40px 20px;
-      background-color: #fff;
-      max-width: 1000px;
-      margin: 30px auto;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-    .live-class-section h2 {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-    }
-    #meet {
-      width: 100%;
-      height: 600px;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
+body {
+  font-family: 'Poppins', sans-serif;
+  background: var(--background-light);
+  color: var(--text-dark);
+  line-height: 1.6;
+}
 
-    /* Dashboard Container */
-    .dashboard-container {
-      max-width: 1000px;
-      margin: 30px auto;
-      padding: 20px;
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-    .dashboard-container h1 {
-      font-size: 2.5rem;
-      margin-bottom: 15px;
-    }
-    .dashboard-container p {
-      font-size: 1.2rem;
-      color: #666;
-    }
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--white);
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
 
-  /* Footer Section */
+.navbar-brand {
+  font-size: clamp(1.5rem, 4vw, 1.75rem);
+  font-weight: 700;
+  color: var(--text-dark);
+  letter-spacing: 0.5px;
+}
+
+.navbar-links a {
+  color: var(--text-dark);
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border: 1.5px solid transparent;
+  border-radius: 5px;
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
+  transition: all 0.3s ease;
+}
+
+.navbar-links a:hover {
+  background-color: var(--primary-color);
+  color: var(--white);
+  border-color: var(--primary-color);
+}
+
+/* Live Class Section */
+.live-class-section {
+  padding: 2rem 1rem;
+  background-color: var(--white);
+  max-width: 1000px;
+  margin: 2rem auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.live-class-section h2 {
+  font-size: clamp(1.8rem, 5vw, 2.2rem);
+  margin-bottom: 1.5rem;
+  color: var(--primary-color);
+}
+
+#meet {
+  width: 100%;
+  height: clamp(300px, 80vw, 600px);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Footer Section */
 .footer-section {
   background: var(--white);
   color: var(--text-dark);
-  padding: 3rem 1.5rem;
+  padding: 2rem 1rem;
   width: 100%;
 }
 
 .footer-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -102,19 +105,19 @@
 }
 
 .footer-logo img {
-  width: 150px;
+  width: 120px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
 .footer-links {
   display: flex;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
 .footer-links a {
   color: var(--text-dark);
   text-decoration: none;
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
   font-weight: 500;
   transition: color 0.3s ease;
 }
@@ -125,12 +128,12 @@
 
 .footer-social {
   display: flex;
-  gap: 1.5rem;
+  gap: 1rem;
 }
 
 .footer-social a {
   color: var(--text-dark);
-  font-size: 1.25rem;
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
   text-decoration: none;
   transition: color 0.3s ease;
 }
@@ -141,7 +144,46 @@
 
 .footer-bottom {
   text-align: center;
-  padding-top: 2rem;
-  font-size: 0.9rem;
+  padding-top: 1.5rem;
+  font-size: clamp(0.8rem, 2vw, 0.9rem);
   color: var(--text-light);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.8rem 1rem;
+  }
+
+  .navbar-links {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 0.8rem;
+    margin-top: 0.8rem;
+  }
+
+  .live-class-section {
+    padding: 1.5rem 0.8rem;
+    margin: 1.5rem auto;
+  }
+
+  .live-class-section h2 {
+    font-size: clamp(1.5rem, 4vw, 1.8rem);
+  }
+
+  #meet {
+    height: clamp(250px, 70vw, 400px);
+  }
+}
+
+@media (max-width: 480px) {
+  .live-class-section h2 {
+    font-size: clamp(1.2rem, 3.5vw, 1.5rem);
+  }
+
+  .navbar-brand {
+    font-size: clamp(1.2rem, 3.5vw, 1.5rem);
+  }
 }
