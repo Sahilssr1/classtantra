@@ -24,6 +24,12 @@ function handleCredentialResponse(response) {
   }
 }
 
+//new message 
+
+document.querySelector('.whatsapp-btn').addEventListener('click', () => {
+  alert('You’ll be redirected to WhatsApp. After sending your demo request, we’ll ask for your name, role (student, YouTuber, etc.), and YouTube channel details if applicable.');
+});
+
 function logout() {
   try {
     google.accounts.id.disableAutoSelect();
